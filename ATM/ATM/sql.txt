@@ -1,0 +1,20 @@
+drop database spaneos_atm;
+
+create database spaneos_atm;
+
+use spaneos_atm;
+
+create table admin(admin_id int auto_increment primary key,email varchar(100) unique,password varchar(10));
+
+insert into admin(email,password) values("atm@gmail.com","atm123");
+
+create table acc_type(acctype_id varchar(2) primary key,type_name varchar(10),rate_of_interest varchar(10));
+
+create table customer(cust_id int primary key,first_name varchar(20),second_name varchar(20),email varchar(100) unique,address text,city varchar(20),state varchar(20),pincode varchar(7));
+
+create table account(accno int primary key,cust_id int,
+acctype_id varchar(2),balance float,acc_status varchar(10),
+foreign key(cust_id) references customer(cust_id),foreign key(acctype_id) references acc_type(acctype_id));
+
+create table transaction(tx_id int auto_increment primary key,accno int,amount float,tx_status varchar(10),tx_date date,
+foreign key(accno) references account(accno));
